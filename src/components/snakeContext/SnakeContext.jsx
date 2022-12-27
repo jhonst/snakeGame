@@ -16,7 +16,9 @@ const SnakeContext = ({children}) => {
     const configFile = {
         "color-snake":"black",
         "snake-value":20,
-        "difficulty":2000
+        "difficulty":2000,
+
+        "board-size" : 400
     }
 
     const [ snakeConfigurations, setSnakeConfigurations ] = useState(configFile);

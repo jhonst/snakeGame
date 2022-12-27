@@ -1,18 +1,17 @@
+import { useState } from "react";
+import { Fruit } from "../fruit/Fruit";
 import { Snake } from "../snake/Snake";
 import "./Board.css";
 
 const Board = () => {
 
-//<div className="snake"></div>
+    const [ bodySnake, setBodySnake ] = useState();
 
-
-//<div className="fruit"></div>
     return(
 
         <div className="board-game">
-            <p>sfgsdf</p>
-            <Snake/>
-            
+            <Snake newSnake={setBodySnake}/>
+            <Fruit currentSnake={bodySnake}/>
         </div>
     );
 }
