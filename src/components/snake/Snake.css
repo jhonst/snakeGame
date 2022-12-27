@@ -1,0 +1,13 @@
+.snake{
+    height: var(--snake-size);
+    width: var(--snake-size);
+    /*border: 50px solid black;*/
+    /*background-color: var(--color-snake);*/
+    /*top: 10px;*/
+    /*color: antiquewhite;*/
+    position: absolute;
+}
+
+.body-snake{
+    position: static;
+}
