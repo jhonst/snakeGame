@@ -10,3 +10,10 @@
 
 - Fruit spawn (in random position except last fruit position and snake position)
 - delete junk code
+
+### v0.03: Eating
+
+- collisions
+- change the position of the fruit when eaten
+- grow snake
+- basic score

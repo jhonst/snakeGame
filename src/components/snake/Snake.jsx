@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSnakeContext } from "../snakeContext/SnakeContext";
 import "./Snake.css";
 
-const Snake = ( { newSnake } ) => {
+const Snake = ( { newSnake, getScore } ) => {
 
     //* carga de contexto!!!!
     const { snakeConfigurations } = useSnakeContext();
@@ -22,6 +22,18 @@ const Snake = ( { newSnake } ) => {
         intervalId: 0,
         sizeSnake: [[0, 0, "red"], [20, 0, "blue"], [40, 0, "red"], [60, 0, "red"]]
     });
+
+    
+    useEffect(() => {
+
+        if (timerId) {
+            clearTimeout(timerId);
+            setTimerId(0);
+        }
+        
+        //! Bug dubble timer and position
+        setSnakeState({ ...snakeState, sizeSnake:  [ [snakeState.sizeSnake[0][0], snakeState.sizeSnake[0][1], "red"], ...snakeState.sizeSnake ]});
+    }, [getScore]);
 
     //*******
     useEffect(() => {
@@ -132,9 +144,6 @@ const Snake = ( { newSnake } ) => {
 
     return (
         <div onKeyDown={handleKeyDown}>
-            {console.log("RENDER!!")}
-            {console.log("CULEBRA", snakeState)}
-            {console.log("sEGUNDO RENDER!!")}
 
             {/*<p>sz: {JSON.stringify(snakeState, null, 2)}</p>*/}
 
