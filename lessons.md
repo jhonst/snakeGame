@@ -17,3 +17,8 @@
 - change the position of the fruit when eaten
 - grow snake
 - basic score
+
+## v0.1: First basic experience
+
+- fixed moving issue (needs improve a lot)
+- first basic experience 

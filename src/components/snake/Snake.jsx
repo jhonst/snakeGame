@@ -20,7 +20,8 @@ const Snake = ( { newSnake, getScore } ) => {
         currentDirection: "down",
         moving: false,
         intervalId: 0,
-        sizeSnake: [[0, 0, "red"], [20, 0, "blue"], [40, 0, "red"], [60, 0, "red"]]
+        sizeSnake: [[0, 0, "red"], [20, 0, "blue"], [40, 0, "red"], [60, 0, "red"]],
+        blockArrows:false
     });
 
     
@@ -31,7 +32,6 @@ const Snake = ( { newSnake, getScore } ) => {
             setTimerId(0);
         }
         
-        //! Bug dubble timer and position
         setSnakeState({ ...snakeState, sizeSnake:  [ [snakeState.sizeSnake[0][0], snakeState.sizeSnake[0][1], "red"], ...snakeState.sizeSnake ]});
     }, [getScore]);
 
@@ -45,7 +45,7 @@ const Snake = ( { newSnake, getScore } ) => {
 
     function moveSnakeTimer() {
         const newTimerId = setTimeout(() => {
-            moveSnake();
+                moveSnake();
         }, 200);
         setTimerId(newTimerId);
     }
@@ -75,7 +75,7 @@ const Snake = ( { newSnake, getScore } ) => {
                 break;
         }
 
-        setSnakeState({ ...snakeState, sizeSnake: moved });
+        setSnakeState({ ...snakeState, sizeSnake: moved, blockArrows: false });
         //newSnake({ ...snakeState, sizeSnake: moved });
         moved = [];
 
@@ -104,53 +104,55 @@ const Snake = ( { newSnake, getScore } ) => {
 
     function changeDirection(direction) {
 
+        if(!snakeState.blockArrows){
 
-        if (timerId) {
-            clearTimeout(timerId);
-            setTimerId(0);
-        }
-
-        switch (direction) {
-            case "up":
-            case "down":
-                if (snakeState.currentDirection === "right" || snakeState.currentDirection === "left") {
-                    //setCurrentDirection(direction);
-                    setSnakeState({ ...snakeState, currentDirection: direction });
-                }
-                break;
-
-            case "right":
-            case "left":
-                if (snakeState.currentDirection === "up" || snakeState.currentDirection === "down") {
-                    //setCurrentDirection(direction);
-                    setSnakeState({ ...snakeState, currentDirection: direction });
-                }
-                break;
-
-            default:
-                break;
-        }
+            if (timerId) {
+                clearTimeout(timerId);
+                setTimerId(0); 
+            }
+    
+            switch (direction) {
+                case "up":
+                case "down":
+                    if (snakeState.currentDirection === "right" || snakeState.currentDirection === "left") {
+                        //setCurrentDirection(direction);
+                        setSnakeState({ ...snakeState, currentDirection: direction,  blockArrows: true});
+                    }
+                    break;
+    
+                case "right":
+                case "left":
+                    if (snakeState.currentDirection === "up" || snakeState.currentDirection === "down") {
+                        //setCurrentDirection(direction);
+                        setSnakeState({ ...snakeState, currentDirection: direction ,  blockArrows: true});
+                    }
+                    break;
+    
+                default:
+                    break;
+            }
+        } 
     }
 
     function startPause() {
         moveSnake();
         //setMoving(!moving);
-        console.log("sdf22", snakeState);
-        setSnakeState({ ...snakeState, moving: !snakeState.moving });
+        //setSnakeState({ ...snakeState, moving: !snakeState.moving }); //este es
+        setSnakeState({ ...snakeState, moving: true });
         //moveSnakeLoop();
-        console.log("sdf22", snakeState);
 
     }
 
     return (
         <div onKeyDown={handleKeyDown}>
 
+            <p>sz: {JSON.stringify(snakeState, null, 2)}</p>
             {/*<p>sz: {JSON.stringify(snakeState, null, 2)}</p>*/}
 
 
-            {snakeState.sizeSnake.map((part) => (
+            {snakeState.sizeSnake.map((part,index) => (
 
-                <div className="snake" style={{ top: part[0], left: part[1], "background-color": part[2] }}></div>
+                <div className="snake" key={index} style={{ top: part[0], left: part[1], "background-color": part[2] }}></div>
 
 
             ))}
